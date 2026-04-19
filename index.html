@@ -12,10 +12,31 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f5;min-height:100vh
 .header h1{font-size:1.5em;margin-bottom:3px}
 .header p{font-size:.82em;opacity:.8}
 .upload-bar{background:white;padding:14px 16px;border-bottom:2px solid #e0e0e0;display:flex;align-items:center;flex-wrap:wrap;gap:10px}
-.upload-btn-wrap{position:relative;display:inline-block}
-.upload-btn-wrap input[type=file]{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:2}
-.upload-btn-face{display:inline-flex;align-items:center;gap:7px;background:#1565c0;color:white;padding:10px 16px;border-radius:8px;font-size:.9em;font-weight:600;cursor:pointer;pointer-events:none}
-#uploadStatus{font-size:.84em;color:#555;flex:1}
+.file-pick{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+/* Style the actual file input directly - works in ALL browsers */
+#fileInput{
+  font-size:.88em;
+  color:#1565c0;
+  padding:8px 12px;
+  border:2px solid #1565c0;
+  border-radius:8px;
+  background:white;
+  cursor:pointer;
+  outline:none;
+}
+#fileInput::file-selector-button{
+  background:#1565c0;
+  color:white;
+  border:none;
+  padding:6px 14px;
+  border-radius:6px;
+  font-size:.88em;
+  font-weight:600;
+  cursor:pointer;
+  margin-right:10px;
+}
+#fileInput::file-selector-button:hover{background:#0d47a1}
+#uploadStatus{font-size:.84em;color:#555;flex:1;min-width:150px}
 .status-ok{color:#2e7d32;font-weight:600}
 .status-err{color:#c62828;font-weight:600}
 .how-to{background:#e8f5e9;border:1px solid #c8e6c9;border-radius:8px;padding:9px 13px;font-size:.78em;color:#1b5e20;max-width:330px}
@@ -67,17 +88,16 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f5;min-height:100vh
 </div>
 
 <div class="upload-bar">
-<div class="upload-btn-wrap">
+<div class="file-pick">
 <input type="file" id="fileInput" accept=".xlsx,.xls" onchange="handleFile(this)">
-<div class="upload-btn-face">&#128194; Upload Google Sheet (XLSX)</div>
+<div id="uploadStatus">Please select your Excel file above</div>
 </div>
-<div id="uploadStatus">No file loaded &mdash; please upload your Excel file</div>
 <div class="how-to">
 <strong>&#128203; How to update:</strong>
 <ol>
 <li>Open Google Sheet &rarr; EMAIL tab</li>
 <li>File &rarr; Download &rarr; Microsoft Excel (.xlsx)</li>
-<li>Tap Upload button &amp; select the file</li>
+<li>Click the file button &amp; select the file</li>
 </ol>
 </div>
 </div>
@@ -88,7 +108,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f5;min-height:100vh
 </div>
 <div id="stationCount"></div>
 <div id="stationList">
-<div class="empty"><div class="ic">&#128194;</div><h3>No data loaded yet</h3><p>Tap Upload Google Sheet (XLSX) above to get started</p></div>
+<div class="empty"><div class="ic">&#128194;</div><h3>No data loaded yet</h3><p>Use the file button above to load your Excel file</p></div>
 </div>
 
 <script>
@@ -141,7 +161,7 @@ function clearSearch(){
 function render(q){
   var L=document.getElementById('stationList'),C=document.getElementById('stationCount');
   if(!D.length){
-    L.innerHTML='<div class="empty"><div class="ic">&#128194;</div><h3>No data loaded yet</h3><p>Tap Upload above to get started</p></div>';
+    L.innerHTML='<div class="empty"><div class="ic">&#128194;</div><h3>No data loaded yet</h3><p>Use the file button above</p></div>';
     C.textContent='';return;
   }
   var f=q?D.filter(function(x){return x.s.startsWith(q);}):D;
