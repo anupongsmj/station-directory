@@ -11,201 +11,177 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f5;min-height:100vh
 .header{background:linear-gradient(135deg,#1a237e,#283593);color:white;padding:18px 20px;text-align:center}
 .header h1{font-size:1.5em;margin-bottom:3px}
 .header p{font-size:.82em;opacity:.8}
-.upload-bar{background:white;padding:14px 16px;border-bottom:2px solid #e0e0e0;display:flex;align-items:center;flex-wrap:wrap;gap:10px}
-.file-pick{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
-/* Style the actual file input directly - works in ALL browsers */
-#fileInput{
-  font-size:.88em;
-  color:#1565c0;
-  padding:8px 12px;
-  border:2px solid #1565c0;
-  border-radius:8px;
-  background:white;
-  cursor:pointer;
-  outline:none;
-}
-#fileInput::file-selector-button{
-  background:#1565c0;
-  color:white;
-  border:none;
-  padding:6px 14px;
-  border-radius:6px;
-  font-size:.88em;
-  font-weight:600;
-  cursor:pointer;
-  margin-right:10px;
-}
+.upload-bar{background:white;padding:14px 16px;border-bottom:2px solid #e0e0e0;display:flex;align-items:center;flex-wrap:wrap;gap:12px}
+#fileInput{font-size:.88em;color:#333;padding:6px 10px;border:2px solid #1565c0;border-radius:8px;background:white;cursor:pointer;outline:none}
+#fileInput::file-selector-button{background:#1565c0;color:white;border:none;padding:7px 14px;border-radius:6px;font-size:.88em;font-weight:600;cursor:pointer;margin-right:8px}
 #fileInput::file-selector-button:hover{background:#0d47a1}
-#uploadStatus{font-size:.84em;color:#555;flex:1;min-width:150px}
+#uploadStatus{font-size:.84em;color:#555}
 .status-ok{color:#2e7d32;font-weight:600}
 .status-err{color:#c62828;font-weight:600}
-.how-to{background:#e8f5e9;border:1px solid #c8e6c9;border-radius:8px;padding:9px 13px;font-size:.78em;color:#1b5e20;max-width:330px}
-.how-to strong{display:block;margin-bottom:3px}
+.how-to{background:#e8f5e9;border:1px solid #c8e6c9;border-radius:8px;padding:9px 13px;font-size:.78em;color:#1b5e20;max-width:340px;margin-left:auto}
+.how-to b{display:block;margin-bottom:4px}
 .how-to ol{padding-left:15px}
 .how-to li{margin:2px 0}
-.search-bar{padding:14px 16px;background:#fff;border-bottom:1px solid #e0e0e0;display:flex;gap:10px;align-items:center}
-#searchBox{flex:1;padding:11px 14px;font-size:1.05em;border:2px solid #3949ab;border-radius:8px;outline:none;text-transform:uppercase}
-#searchBox:focus{border-color:#1a237e;box-shadow:0 0 0 3px rgba(57,73,171,.2)}
-#clearBtn{padding:11px 14px;background:#ef5350;color:white;border:none;border-radius:8px;font-size:.88em;cursor:pointer;display:none;white-space:nowrap}
-#stationCount{text-align:center;padding:7px;color:#666;font-size:.83em;background:#f5f5f5;border-bottom:1px solid #e0e0e0}
-#stationList{padding:10px 14px;max-width:960px;margin:0 auto}
+.sbar{padding:14px 16px;background:#fff;border-bottom:1px solid #e0e0e0;display:flex;gap:10px;align-items:center}
+#srch{flex:1;padding:11px 14px;font-size:1.05em;border:2px solid #3949ab;border-radius:8px;outline:none;text-transform:uppercase}
+#srch:focus{border-color:#1a237e;box-shadow:0 0 0 3px rgba(57,73,171,.2)}
+#clr{padding:11px 14px;background:#ef5350;color:white;border:none;border-radius:8px;font-size:.88em;cursor:pointer;display:none}
+#cnt{text-align:center;padding:7px;color:#666;font-size:.83em;background:#f5f5f5;border-bottom:1px solid #e0e0e0}
+#lst{padding:10px 14px;max-width:960px;margin:0 auto}
 .empty{text-align:center;padding:50px 20px;color:#999}
-.empty .ic{font-size:2.5em;margin-bottom:10px}
-.empty h3{color:#666;font-size:1em}
+.empty h3{color:#666;font-size:1em;margin-top:10px}
 .empty p{font-size:.83em;margin-top:5px}
 .card{background:white;border-radius:10px;margin-bottom:8px;box-shadow:0 2px 5px rgba(0,0,0,.07);border:1px solid #e0e0e0;overflow:hidden}
-.card-head{background:linear-gradient(135deg,#283593,#3949ab);color:white;padding:13px 16px;display:flex;align-items:center;cursor:pointer;user-select:none;gap:8px}
-.card-head:hover{background:linear-gradient(135deg,#1a237e,#283593)}
-.code{font-size:1.15em;font-weight:700;flex:1}
-.badges{display:flex;gap:5px;flex-wrap:wrap}
-.badge{padding:2px 7px;border-radius:10px;font-size:.7em;font-weight:600;background:rgba(255,255,255,.2)}
-.arr{transition:transform .2s;font-size:.9em}
-.arr.open{transform:rotate(180deg)}
-.card-body{display:none;padding:14px}
-.card-body.open{display:block}
+.ch{background:linear-gradient(135deg,#283593,#3949ab);color:white;padding:13px 16px;display:flex;align-items:center;cursor:pointer;user-select:none;gap:8px}
+.ch:hover{background:linear-gradient(135deg,#1a237e,#283593)}
+.cc{font-size:1.15em;font-weight:700;flex:1}
+.bgs{display:flex;gap:5px;flex-wrap:wrap}
+.bg{padding:2px 7px;border-radius:10px;font-size:.7em;font-weight:600;background:rgba(255,255,255,.2)}
+.ar{transition:transform .2s}
+.ar.op{transform:rotate(180deg)}
+.cb{display:none;padding:14px}
+.cb.op{display:block}
 .sec{margin-bottom:12px;border:1px solid #e8eaf6;border-radius:8px;overflow:hidden}
-.sec-title{background:#e8eaf6;color:#283593;padding:7px 12px;font-size:.8em;font-weight:700;text-transform:uppercase;letter-spacing:.4px;display:flex;align-items:center;justify-content:space-between}
-.cpbtn{background:#3949ab;color:white;border:none;padding:3px 9px;border-radius:5px;font-size:.77em;cursor:pointer}
-.cpbtn:hover{background:#1a237e}
-.cpbtn.ok{background:#2e7d32}
-.sec-body{padding:9px 12px}
-.row{display:flex;gap:8px;margin-bottom:6px;flex-wrap:wrap}
-.lbl{font-size:.73em;color:#777;font-weight:600;min-width:70px;padding-top:2px}
-.val{font-size:.86em;color:#333;flex:1;word-break:break-all}
-.eml{color:#1565c0}
-.cpa{background:#f5f7ff;border:1px dashed #9fa8da;border-radius:6px;padding:7px 9px;margin-top:6px;display:flex;align-items:flex-start;gap:7px}
+.sh{background:#e8eaf6;color:#283593;padding:7px 12px;font-size:.8em;font-weight:700;text-transform:uppercase;display:flex;align-items:center;justify-content:space-between}
+.cpb{background:#3949ab;color:white;border:none;padding:3px 9px;border-radius:5px;font-size:.77em;cursor:pointer}
+.cpb:hover{background:#1a237e}
+.cpb.ok{background:#2e7d32}
+.sb{padding:9px 12px}
+.rw{display:flex;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+.lb{font-size:.73em;color:#777;font-weight:600;min-width:70px;padding-top:2px}
+.vl{font-size:.86em;color:#333;flex:1;word-break:break-all}
+.em{color:#1565c0}
+.cpa{background:#f5f7ff;border:1px dashed #9fa8da;border-radius:6px;padding:7px 9px;margin-top:6px;display:flex;gap:7px}
 .cpa textarea{flex:1;border:none;background:transparent;font-size:.76em;color:#333;resize:none;outline:none;min-height:32px;font-family:monospace}
-.cpabtn{background:#3949ab;color:white;border:none;padding:4px 9px;border-radius:5px;font-size:.73em;cursor:pointer;white-space:nowrap}
-.cpabtn:hover{background:#1a237e}
-.cpabtn.ok{background:#2e7d32}
-.nores{text-align:center;padding:36px;color:#999;font-size:.93em}
+.cab{background:#3949ab;color:white;border:none;padding:4px 9px;border-radius:5px;font-size:.73em;cursor:pointer;white-space:nowrap}
+.cab:hover{background:#1a237e}
+.cab.ok{background:#2e7d32}
+.nr{text-align:center;padding:36px;color:#999}
 </style>
 </head>
 <body>
-<div class="header">
-<h1>&#9992; Ground Handling Station Directory</h1>
-<p>Upload your Google Sheet (.xlsx) to load contact information</p>
-</div>
-
+<div class="header"><h1>&#9992; Ground Handling Station Directory</h1><p>Upload your Google Sheet (.xlsx) to load contact information</p></div>
 <div class="upload-bar">
-<div class="file-pick">
-<input type="file" id="fileInput" accept=".xlsx,.xls" onchange="handleFile(this)">
-<div id="uploadStatus">Please select your Excel file above</div>
+<input type="file" id="fileInput" accept=".xlsx,.xls" onchange="loadFile(this)">
+<span id="uploadStatus">Select your .xlsx file above</span>
+<div class="how-to"><b>How to update data:</b><ol><li>Google Sheet &rarr; FILE &rarr; Download &rarr; Excel (.xlsx)</li><li>Click Choose File above &amp; select it</li><li>Data loads automatically</li></ol></div>
 </div>
-<div class="how-to">
-<strong>&#128203; How to update:</strong>
-<ol>
-<li>Open Google Sheet &rarr; EMAIL tab</li>
-<li>File &rarr; Download &rarr; Microsoft Excel (.xlsx)</li>
-<li>Click the file button &amp; select the file</li>
-</ol>
-</div>
-</div>
-
-<div class="search-bar">
-<input type="text" id="searchBox" placeholder="Search station code e.g. DMK BKK SIN" oninput="handleSearch(this.value)">
-<button id="clearBtn" onclick="clearSearch()">&#10005; Clear</button>
-</div>
-<div id="stationCount"></div>
-<div id="stationList">
-<div class="empty"><div class="ic">&#128194;</div><h3>No data loaded yet</h3><p>Use the file button above to load your Excel file</p></div>
-</div>
-
+<div class="sbar"><input type="text" id="srch" placeholder="Type station code: DMK  BKK  SIN..." oninput="doSearch(this.value)"><button id="clr" onclick="clearS()">&#10005; Clear</button></div>
+<div id="cnt"></div>
+<div id="lst"><div class="empty"><h3>&#128194; No data loaded</h3><p>Select your Excel file above to begin</p></div></div>
 <script>
 var D=[];
-function handleFile(inp){
+function loadFile(inp){
   var f=inp.files[0];if(!f)return;
-  var s=document.getElementById('uploadStatus');
-  s.textContent='Reading...';s.className='';
+  var st=document.getElementById("uploadStatus");
+  st.textContent="Reading "+f.name+"...";st.className="";
   var r=new FileReader();
   r.onload=function(e){
     try{
-      var wb=XLSX.read(new Uint8Array(e.target.result),{type:'array',cellFormula:false,cellHTML:false,raw:false});
-      var sn=wb.SheetNames.find(function(n){return n.toUpperCase()==='EMAIL';})||wb.SheetNames[0];
-      var rows=XLSX.utils.sheet_to_json(wb.Sheets[sn],{header:1,defval:'',raw:false});
-      parse(rows);
-      s.textContent='Loaded: '+f.name+' ('+D.length+' stations)';
-      s.className='status-ok';
-      render();
-    }catch(err){s.textContent='Error: '+err.message;s.className='status-err';}
+      var wb=XLSX.read(new Uint8Array(e.target.result),{type:"array",cellFormula:false,raw:false});
+      var sn=wb.SheetNames.find(function(n){return n.toUpperCase()==="EMAIL";}) || wb.SheetNames[0];
+      var rows=XLSX.utils.sheet_to_json(wb.Sheets[sn],{header:1,defval:"",raw:false});
+      parseRows(rows);
+      st.textContent="Loaded: "+f.name+" ("+D.length+" stations from sheet: "+sn+")";
+      st.className="status-ok";
+      showAll();
+    }catch(err){
+      st.textContent="Error: "+err.message;
+      st.className="status-err";
+    }
   };
   r.readAsArrayBuffer(f);
 }
-function parse(rows){
-  D=[];var last='';var map={};
+function parseRows(rows){
+  D=[];var last="";var map={};
   for(var i=1;i<rows.length;i++){
     var row=rows[i];if(!row||!row.length)continue;
-    var st=String(row[0]||'').trim().toUpperCase()||last;
+    var st=String(row[0]||"").trim().toUpperCase()||last;
     if(!st)continue;last=st;
-    var ie=String(row[9]||'').trim(),ic=String(row[10]||'').trim();
-    var pe=String(row[11]||'').trim(),pc=String(row[12]||'').trim();
-    var ll=String(row[13]||'').trim();
+    var ie=String(row[9]||"").trim();
+    var ic=String(row[10]||"").trim();
+    var pe=String(row[11]||"").trim();
+    var pc=String(row[12]||"").trim();
+    var ll=String(row[13]||"").trim();
     if(!ie&&!ic&&!pe&&!pc&&!ll)continue;
-    if(!map[st]){map[st]={s:st,ie:'',ic:'',pe:'',pc:'',ll:''};D.push(map[st]);}
+    if(!map[st]){map[st]={s:st,ie:"",ic:"",pe:"",pc:"",ll:""};D.push(map[st]);}
     var m=map[st];
-    if(!m.ie&&ie)m.ie=ie;if(!m.ic&&ic)m.ic=ic;
-    if(!m.pe&&pe)m.pe=pe;if(!m.pc&&pc)m.pc=pc;
+    if(!m.ie&&ie)m.ie=ie;
+    if(!m.ic&&ic)m.ic=ic;
+    if(!m.pe&&pe)m.pe=pe;
+    if(!m.pc&&pc)m.pc=pc;
     if(!m.ll&&ll)m.ll=ll;
   }
   D.sort(function(a,b){return a.s.localeCompare(b.s);});
 }
-function handleSearch(v){
-  document.getElementById('clearBtn').style.display=v?'block':'none';
-  render(v.trim().toUpperCase());
+function doSearch(v){
+  document.getElementById("clr").style.display=v?"block":"none";
+  showAll(v.trim().toUpperCase());
 }
-function clearSearch(){
-  document.getElementById('searchBox').value='';
-  document.getElementById('clearBtn').style.display='none';
-  render('');
+function clearS(){
+  document.getElementById("srch").value="";
+  document.getElementById("clr").style.display="none";
+  showAll("");
 }
-function render(q){
-  var L=document.getElementById('stationList'),C=document.getElementById('stationCount');
+function showAll(q){
+  var L=document.getElementById("lst"),C=document.getElementById("cnt");
   if(!D.length){
-    L.innerHTML='<div class="empty"><div class="ic">&#128194;</div><h3>No data loaded yet</h3><p>Use the file button above</p></div>';
-    C.textContent='';return;
+    L.innerHTML='<div class="empty"><h3>&#128194; No data loaded</h3><p>Select your Excel file above</p></div>';
+    C.textContent="";return;
   }
   var f=q?D.filter(function(x){return x.s.startsWith(q);}):D;
-  C.textContent='Showing '+f.length+' of '+D.length+' stations';
-  if(!f.length){L.innerHTML='<div class="nores">No station found: '+q+'</div>';return;}
-  L.innerHTML=f.map(mkCard).join('');
+  C.textContent="Showing "+f.length+" of "+D.length+" stations";
+  if(!f.length){L.innerHTML='<div class="nr">No station found: '+q+'</div>';return;}
+  L.innerHTML=f.map(mkCard).join("");
 }
 function mkCard(x){
   var hi=x.ie||x.ic,hp=x.pe||x.pc,hl=x.ll;
-  var b='',id='c'+x.s,sec='';
-  if(hi)b+='<span class="badge">Internal</span>';
-  if(hp)b+='<span class="badge">Public</span>';
-  if(hl)b+='<span class="badge">LL Airport</span>';
-  if(hi)sec+=mkSec('Internal',x.ie,x.ic,id+'i');
-  if(hp)sec+=mkSec('Public',x.pe,x.pc,id+'p');
-  if(hl)sec+=mkSec('LL Airport','',x.ll,id+'l');
-  return '<div class="card"><div class="card-head" onclick="tog(''+id+'')"><span class="code">'+x.s+'</span><div class="badges">'+b+'</div><span class="arr" id="a'+id+'">&#9660;</span></div><div class="card-body" id="'+id+'">'+sec+'</div></div>';
+  var b="",id="c"+x.s,sec="";
+  if(hi)b+='<span class="bg">Internal</span>';
+  if(hp)b+='<span class="bg">Public</span>';
+  if(hl)b+='<span class="bg">LL Airport</span>';
+  if(hi)sec+=mkSec("Internal",x.ie,x.ic,id+"i");
+  if(hp)sec+=mkSec("Public",x.pe,x.pc,id+"p");
+  if(hl)sec+=mkSec("LL Airport","",x.ll,id+"l");
+  return '<div class="card"><div class="ch" onclick="tog("'+id+'")">'+
+    '<span class="cc">'+x.s+'</span><div class="bgs">'+b+'</div>'+
+    '<span class="ar" id="a'+id+'">&#9660;</span></div>'+
+    '<div class="cb" id="'+id+'">'+sec+'</div></div>';
 }
 function mkSec(t,e,c,id){
-  var r='';
-  if(e)r+='<div class="row"><span class="lbl">Email:</span><span class="val eml">'+e+'</span></div>';
-  if(c)r+='<div class="row"><span class="lbl">Contact:</span><span class="val">'+c+'</span></div>';
-  var ca=e?'<div class="cpa"><textarea id="ta'+id+'" readonly onclick="this.select()">'+e+'</textarea><button class="cpabtn" id="b'+id+'" onclick="cp('ta'+id+'','b'+id+'')">&#128203; Copy</button></div>':'';
-  var hdr=t+(e?'<button class="cpbtn" id="cb'+id+'" onclick="cp('ta'+id+'','cb'+id+'')">&#128203; Copy Email</button>':'');
-  return '<div class="sec"><div class="sec-title">'+hdr+'</div><div class="sec-body">'+r+ca+'</div></div>';
+  var r="";
+  if(e)r+='<div class="rw"><span class="lb">Email:</span><span class="vl em">'+e+'</span></div>';
+  if(c)r+='<div class="rw"><span class="lb">Contact:</span><span class="vl">'+c+'</span></div>';
+  var ca="";
+  if(e)ca='<div class="cpa"><textarea id="ta'+id+'" readonly onclick="this.select()">'+e+'</textarea>'+
+    '<button class="cab" id="b'+id+'" onclick="cp(\''+id+'\')">' +
+    "&#128203; Copy</button></div>";
+  var hd=t+(e?'<button class="cpb" id="cb'+id+'" onclick="cp(\''+id+'\')">'+
+    "&#128203; Copy Email</button>":"");
+  return '<div class="sec"><div class="sh">'+hd+'</div><div class="sb">'+r+ca+'</div></div>';
 }
 function tog(id){
-  var b=document.getElementById(id),a=document.getElementById('a'+id);
-  var o=b.classList.contains('open');
-  b.classList.toggle('open',!o);a.classList.toggle('open',!o);
+  var b=document.getElementById(id),a=document.getElementById("a"+id);
+  var o=b.classList.contains("op");
+  b.classList.toggle("op",!o);a.classList.toggle("op",!o);
 }
-function cp(tid,bid){
-  var ta=document.getElementById(tid);if(!ta)return;
+function cp(id){
+  var ta=document.getElementById("ta"+id);if(!ta)return;
   ta.focus();ta.select();
-  var ok=false;try{ok=document.execCommand('copy');}catch(e){}
+  var ok=false;try{ok=document.execCommand("copy");}catch(e){}
   if(!ok){
-    var t=document.createElement('textarea');
-    t.value=ta.value;t.style.cssText='position:fixed;top:0;left:0;opacity:0;';
+    var t=document.createElement("textarea");
+    t.value=ta.value;
+    t.style.cssText="position:fixed;top:0;left:0;opacity:0;";
     document.body.appendChild(t);t.focus();t.select();
-    try{document.execCommand('copy');}catch(e){}
+    try{document.execCommand("copy");}catch(e){}
     document.body.removeChild(t);
   }
-  var btn=document.getElementById(bid);
-  if(btn){var o=btn.textContent;btn.textContent='Copied!';btn.classList.add('ok');setTimeout(function(){btn.textContent=o;btn.classList.remove('ok');},2000);}
+  ["cb"+id,"b"+id].forEach(function(bid){
+    var btn=document.getElementById(bid);
+    if(btn){var o=btn.textContent;btn.textContent="Copied!";btn.classList.add("ok");
+      setTimeout(function(){btn.textContent=o;btn.classList.remove("ok");},2000);}
+  });
 }
 </script>
 </body>
