@@ -6,31 +6,187 @@
 <title>Ground Handling Station Directory</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <style>
-*{box-sizing:border-box;margin:0;padding:0}body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f5;min-height:100vh}.header{background:linear-gradient(135deg,#1a237e 0%,#283593 100%);color:white;padding:20px;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.3)}.header h1{font-size:1.6em;margin-bottom:4px}.header p{font-size:.85em;opacity:.8}.upload-section{background:white;padding:16px 20px;border-bottom:2px solid #e0e0e0;display:flex;align-items:center;gap:12px;flex-wrap:wrap}.upload-label{display:inline-flex;align-items:center;gap:8px;background:#1565c0;color:white;padding:10px 18px;border-radius:8px;font-size:.9em;font-weight:600;cursor:pointer;transition:background .2s;border:none}.upload-label:hover{background:#0d47a1}#fileInput{display:none}#uploadStatus{font-size:.85em;color:#555;flex:1}.status-ok{color:#2e7d32;font-weight:600}.status-err{color:#c62828;font-weight:600}.how-to{background:#e8f5e9;border:1px solid #c8e6c9;border-radius:8px;padding:10px 14px;font-size:.8em;color:#1b5e20;margin-left:auto;max-width:340px}.how-to strong{display:block;margin-bottom:4px}.how-to ol{padding-left:16px}.how-to li{margin:2px 0}.search-section{padding:16px 20px;background:#fff;border-bottom:1px solid #e0e0e0;display:flex;align-items:center;gap:12px}#searchBox{flex:1;padding:12px 16px;font-size:1.1em;border:2px solid #3949ab;border-radius:8px;outline:none;text-transform:uppercase}#searchBox:focus{border-color:#1a237e;box-shadow:0 0 0 3px rgba(57,73,171,.2)}#clearBtn{padding:12px 16px;background:#ef5350;color:white;border:none;border-radius:8px;font-size:.9em;cursor:pointer;display:none}#clearBtn:hover{background:#c62828}#stationCount{text-align:center;padding:8px;color:#666;font-size:.85em;background:#f5f5f5;border-bottom:1px solid #e0e0e0}#stationList{padding:12px 16px;max-width:960px;margin:0 auto}.no-data{text-align:center;padding:60px 20px;color:#999}.no-data .icon{font-size:3em;margin-bottom:12px}.no-data h3{font-size:1.1em;color:#666}.no-data p{font-size:.85em;margin-top:6px}.station-card{background:white;border-radius:10px;margin-bottom:8px;box-shadow:0 2px 6px rgba(0,0,0,.08);overflow:hidden;border:1px solid #e0e0e0}.station-header{background:linear-gradient(135deg,#283593,#3949ab);color:white;padding:14px 18px;display:flex;align-items:center;cursor:pointer;user-select:none;gap:10px}.station-header:hover{background:linear-gradient(135deg,#1a237e,#283593)}.station-code{font-size:1.2em;font-weight:700;flex:1}.station-badges{display:flex;gap:6px}.badge{padding:3px 8px;border-radius:12px;font-size:.72em;font-weight:600;background:rgba(255,255,255,.2)}.arrow{font-size:1em;transition:transform .2s}.arrow.open{transform:rotate(180deg)}.station-body{display:none;padding:16px}.station-body.open{display:block}.contact-section{margin-bottom:14px;border:1px solid #e8eaf6;border-radius:8px;overflow:hidden}.contact-section-title{background:#e8eaf6;color:#283593;padding:8px 14px;font-size:.82em;font-weight:700;text-transform:uppercase;letter-spacing:.5px;display:flex;align-items:center;justify-content:space-between}.copy-btn{background:#3949ab;color:white;border:none;padding:4px 10px;border-radius:6px;font-size:.8em;cursor:pointer}.copy-btn:hover{background:#1a237e}.copy-btn.copied{background:#2e7d32}.contact-content{padding:10px 14px}.contact-row{display:flex;gap:10px;margin-bottom:8px;flex-wrap:wrap}.contact-label{font-size:.75em;color:#777;font-weight:600;min-width:80px;padding-top:2px}.contact-value{font-size:.88em;color:#333;flex:1;word-break:break-all}.email-text{color:#1565c0}.copy-area{background:#f5f7ff;border:1px dashed #9fa8da;border-radius:6px;padding:8px 10px;margin-top:8px;display:flex;align-items:flex-start;gap:8px}.copy-area textarea{flex:1;border:none;background:transparent;font-size:.78em;color:#333;resize:none;outline:none;min-height:36px;font-family:monospace}.copy-area-btn{background:#3949ab;color:white;border:none;padding:5px 10px;border-radius:5px;font-size:.75em;cursor:pointer;white-space:nowrap}.copy-area-btn:hover{background:#1a237e}.copy-area-btn.copied{background:#2e7d32}.no-result{text-align:center;padding:40px;color:#999;font-size:.95em}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f5;min-height:100vh}
+.header{background:linear-gradient(135deg,#1a237e,#283593);color:white;padding:18px 20px;text-align:center}
+.header h1{font-size:1.5em;margin-bottom:3px}
+.header p{font-size:.82em;opacity:.8}
+.upload-bar{background:white;padding:14px 16px;border-bottom:2px solid #e0e0e0;display:flex;align-items:center;flex-wrap:wrap;gap:10px}
+.upload-btn-wrap{position:relative;display:inline-block}
+.upload-btn-wrap input[type=file]{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:2}
+.upload-btn-face{display:inline-flex;align-items:center;gap:7px;background:#1565c0;color:white;padding:10px 16px;border-radius:8px;font-size:.9em;font-weight:600;cursor:pointer;pointer-events:none}
+#uploadStatus{font-size:.84em;color:#555;flex:1}
+.status-ok{color:#2e7d32;font-weight:600}
+.status-err{color:#c62828;font-weight:600}
+.how-to{background:#e8f5e9;border:1px solid #c8e6c9;border-radius:8px;padding:9px 13px;font-size:.78em;color:#1b5e20;max-width:330px}
+.how-to strong{display:block;margin-bottom:3px}
+.how-to ol{padding-left:15px}
+.how-to li{margin:2px 0}
+.search-bar{padding:14px 16px;background:#fff;border-bottom:1px solid #e0e0e0;display:flex;gap:10px;align-items:center}
+#searchBox{flex:1;padding:11px 14px;font-size:1.05em;border:2px solid #3949ab;border-radius:8px;outline:none;text-transform:uppercase}
+#searchBox:focus{border-color:#1a237e;box-shadow:0 0 0 3px rgba(57,73,171,.2)}
+#clearBtn{padding:11px 14px;background:#ef5350;color:white;border:none;border-radius:8px;font-size:.88em;cursor:pointer;display:none;white-space:nowrap}
+#stationCount{text-align:center;padding:7px;color:#666;font-size:.83em;background:#f5f5f5;border-bottom:1px solid #e0e0e0}
+#stationList{padding:10px 14px;max-width:960px;margin:0 auto}
+.empty{text-align:center;padding:50px 20px;color:#999}
+.empty .ic{font-size:2.5em;margin-bottom:10px}
+.empty h3{color:#666;font-size:1em}
+.empty p{font-size:.83em;margin-top:5px}
+.card{background:white;border-radius:10px;margin-bottom:8px;box-shadow:0 2px 5px rgba(0,0,0,.07);border:1px solid #e0e0e0;overflow:hidden}
+.card-head{background:linear-gradient(135deg,#283593,#3949ab);color:white;padding:13px 16px;display:flex;align-items:center;cursor:pointer;user-select:none;gap:8px}
+.card-head:hover{background:linear-gradient(135deg,#1a237e,#283593)}
+.code{font-size:1.15em;font-weight:700;flex:1}
+.badges{display:flex;gap:5px;flex-wrap:wrap}
+.badge{padding:2px 7px;border-radius:10px;font-size:.7em;font-weight:600;background:rgba(255,255,255,.2)}
+.arr{transition:transform .2s;font-size:.9em}
+.arr.open{transform:rotate(180deg)}
+.card-body{display:none;padding:14px}
+.card-body.open{display:block}
+.sec{margin-bottom:12px;border:1px solid #e8eaf6;border-radius:8px;overflow:hidden}
+.sec-title{background:#e8eaf6;color:#283593;padding:7px 12px;font-size:.8em;font-weight:700;text-transform:uppercase;letter-spacing:.4px;display:flex;align-items:center;justify-content:space-between}
+.cpbtn{background:#3949ab;color:white;border:none;padding:3px 9px;border-radius:5px;font-size:.77em;cursor:pointer}
+.cpbtn:hover{background:#1a237e}
+.cpbtn.ok{background:#2e7d32}
+.sec-body{padding:9px 12px}
+.row{display:flex;gap:8px;margin-bottom:6px;flex-wrap:wrap}
+.lbl{font-size:.73em;color:#777;font-weight:600;min-width:70px;padding-top:2px}
+.val{font-size:.86em;color:#333;flex:1;word-break:break-all}
+.eml{color:#1565c0}
+.cpa{background:#f5f7ff;border:1px dashed #9fa8da;border-radius:6px;padding:7px 9px;margin-top:6px;display:flex;align-items:flex-start;gap:7px}
+.cpa textarea{flex:1;border:none;background:transparent;font-size:.76em;color:#333;resize:none;outline:none;min-height:32px;font-family:monospace}
+.cpabtn{background:#3949ab;color:white;border:none;padding:4px 9px;border-radius:5px;font-size:.73em;cursor:pointer;white-space:nowrap}
+.cpabtn:hover{background:#1a237e}
+.cpabtn.ok{background:#2e7d32}
+.nores{text-align:center;padding:36px;color:#999;font-size:.93em}
 </style>
 </head>
 <body>
-<div class="header"><h1>&#9992; Ground Handling Station Directory</h1><p>Upload your Google Sheet (.xlsx) to load station contact information</p></div>
-<div class="upload-section">
-<label class="upload-label" for="fileInput">&#128194; Upload Google Sheet (XLSX)</label>
-<input type="file" id="fileInput" accept=".xlsx,.xls" onchange="handleFile(this)">
-<div id="uploadStatus">No file loaded - please upload your Excel file</div>
-<div class="how-to"><strong>How to update data:</strong><ol><li>Open Google Sheet, go to EMAIL tab</li><li>File then Download then Microsoft Excel (.xlsx)</li><li>Click Upload Google Sheet (XLSX) above</li><li>Select the downloaded .xlsx file</li></ol></div>
+<div class="header">
+<h1>&#9992; Ground Handling Station Directory</h1>
+<p>Upload your Google Sheet (.xlsx) to load contact information</p>
 </div>
-<div class="search-section"><input type="text" id="searchBox" placeholder="Search station code e.g. DMK BKK SIN" oninput="handleSearch(this.value)"><button id="clearBtn" onclick="clearSearch()">Clear</button></div>
+
+<div class="upload-bar">
+<div class="upload-btn-wrap">
+<input type="file" id="fileInput" accept=".xlsx,.xls" onchange="handleFile(this)">
+<div class="upload-btn-face">&#128194; Upload Google Sheet (XLSX)</div>
+</div>
+<div id="uploadStatus">No file loaded &mdash; please upload your Excel file</div>
+<div class="how-to">
+<strong>&#128203; How to update:</strong>
+<ol>
+<li>Open Google Sheet &rarr; EMAIL tab</li>
+<li>File &rarr; Download &rarr; Microsoft Excel (.xlsx)</li>
+<li>Tap Upload button &amp; select the file</li>
+</ol>
+</div>
+</div>
+
+<div class="search-bar">
+<input type="text" id="searchBox" placeholder="Search station code e.g. DMK BKK SIN" oninput="handleSearch(this.value)">
+<button id="clearBtn" onclick="clearSearch()">&#10005; Clear</button>
+</div>
 <div id="stationCount"></div>
-<div id="stationList"><div class="no-data"><div class="icon">&#128194;</div><h3>No data loaded yet</h3><p>Click Upload Google Sheet (XLSX) above to get started</p></div></div>
+<div id="stationList">
+<div class="empty"><div class="ic">&#128194;</div><h3>No data loaded yet</h3><p>Tap Upload Google Sheet (XLSX) above to get started</p></div>
+</div>
+
 <script>
-var A=[];
-function handleFile(inp){var f=inp.files[0];if(!f)return;var s=document.getElementById('uploadStatus');s.textContent='Reading...';s.className='';var r=new FileReader();r.onload=function(e){try{var d=new Uint8Array(e.target.result);var wb=XLSX.read(d,{type:'array',cellFormula:false,cellHTML:false,raw:false});var sn=wb.SheetNames.find(function(n){return n.toUpperCase()==='EMAIL';})||wb.SheetNames[0];var sh=wb.Sheets[sn];var rows=XLSX.utils.sheet_to_json(sh,{header:1,defval:'',raw:false});parse(rows);s.textContent='Loaded: '+f.name+' ('+A.length+' stations)';s.className='status-ok';render();}catch(err){s.textContent='Error: '+err.message;s.className='status-err';}};r.readAsArrayBuffer(f);}
-function parse(rows){A=[];var last='';var map={};for(var i=1;i<rows.length;i++){var row=rows[i];if(!row||!row.length)continue;var raw=String(row[0]||'').trim().toUpperCase();var st=raw||last;if(!st)continue;last=st;var ie=String(row[9]||'').trim(),ic=String(row[10]||'').trim(),pe=String(row[11]||'').trim(),pc=String(row[12]||'').trim(),ll=String(row[13]||'').trim();if(!ie&&!ic&&!pe&&!pc&&!ll)continue;if(!map[st]){map[st]={station:st,ie:'',ic:'',pe:'',pc:'',ll:''};A.push(map[st]);}var s=map[st];if(!s.ie&&ie)s.ie=ie;if(!s.ic&&ic)s.ic=ic;if(!s.pe&&pe)s.pe=pe;if(!s.pc&&pc)s.pc=pc;if(!s.ll&&ll)s.ll=ll;}A.sort(function(a,b){return a.station.localeCompare(b.station);});}
-function handleSearch(v){document.getElementById('clearBtn').style.display=v?'block':'none';render(v.trim().toUpperCase());}
-function clearSearch(){document.getElementById('searchBox').value='';document.getElementById('clearBtn').style.display='none';render('');}
-function render(q){var list=document.getElementById('stationList');var cnt=document.getElementById('stationCount');if(!A.length){list.innerHTML='<div class="no-data"><div class="icon">&#128194;</div><h3>No data loaded yet</h3><p>Click Upload above</p></div>';cnt.textContent='';return;}var f=q?A.filter(function(s){return s.station.startsWith(q);}):A;cnt.textContent='Showing '+f.length+' of '+A.length+' stations';if(!f.length){list.innerHTML='<div class="no-result">No station found: '+q+'</div>';return;}list.innerHTML=f.map(card).join('');}
-function card(s){var hi=s.ie||s.ic,hp=s.pe||s.pc,hl=s.ll,b='',id='c_'+s.station,sec='';if(hi)b+='<span class="badge">Internal</span>';if(hp)b+='<span class="badge">Public</span>';if(hl)b+='<span class="badge">LL Airport</span>';if(hi)sec+=sec1('Internal',s.ie,s.ic,id+'i');if(hp)sec+=sec1('Public',s.pe,s.pc,id+'p');if(hl)sec+=sec1('LL Airport','',s.ll,id+'l');return '<div class="station-card"><div class="station-header" onclick="tog(''+id+'')"><span class="station-code">'+s.station+'</span><div class="station-badges">'+b+'</div><span class="arrow" id="a'+id+'">&#9660;</span></div><div class="station-body" id="'+id+'">'+sec+'</div></div>';}
-function sec1(t,e,c,id){var r='';if(e)r+='<div class="contact-row"><span class="contact-label">Email:</span><span class="contact-value email-text">'+e+'</span></div>';if(c)r+='<div class="contact-row"><span class="contact-label">Contact:</span><span class="contact-value">'+c+'</span></div>';var ca=e?'<div class="copy-area"><textarea id="ta'+id+'" readonly onclick="this.select()">'+e+'</textarea><button class="copy-area-btn" id="b'+id+'" onclick="cp('ta'+id+'','b'+id+'')">&#128203; Copy</button></div>':'';return '<div class="contact-section"><div class="contact-section-title">'+t+(e?'<button class="copy-btn" id="cb'+id+'" onclick="cp('ta'+id+'','cb'+id+'')">&#128203; Copy Email</button>':'')+'</div><div class="contact-content">'+r+ca+'</div></div>';}
-function tog(id){var b=document.getElementById(id),a=document.getElementById('a'+id),o=b.classList.contains('open');b.classList.toggle('open',!o);a.classList.toggle('open',!o);}
-function cp(tid,bid){var ta=document.getElementById(tid);if(!ta)return;ta.focus();ta.select();var ok=false;try{ok=document.execCommand('copy');}catch(e){}if(!ok){var t=document.createElement('textarea');t.value=ta.value;t.style.cssText='position:fixed;top:0;left:0;opacity:0;';document.body.appendChild(t);t.focus();t.select();try{document.execCommand('copy');}catch(e){}document.body.removeChild(t);}var btn=document.getElementById(bid);if(btn){var o=btn.textContent;btn.textContent='Copied!';btn.classList.add('copied');setTimeout(function(){btn.textContent=o;btn.classList.remove('copied');},2000);}}
+var D=[];
+function handleFile(inp){
+  var f=inp.files[0];if(!f)return;
+  var s=document.getElementById('uploadStatus');
+  s.textContent='Reading...';s.className='';
+  var r=new FileReader();
+  r.onload=function(e){
+    try{
+      var wb=XLSX.read(new Uint8Array(e.target.result),{type:'array',cellFormula:false,cellHTML:false,raw:false});
+      var sn=wb.SheetNames.find(function(n){return n.toUpperCase()==='EMAIL';})||wb.SheetNames[0];
+      var rows=XLSX.utils.sheet_to_json(wb.Sheets[sn],{header:1,defval:'',raw:false});
+      parse(rows);
+      s.textContent='Loaded: '+f.name+' ('+D.length+' stations)';
+      s.className='status-ok';
+      render();
+    }catch(err){s.textContent='Error: '+err.message;s.className='status-err';}
+  };
+  r.readAsArrayBuffer(f);
+}
+function parse(rows){
+  D=[];var last='';var map={};
+  for(var i=1;i<rows.length;i++){
+    var row=rows[i];if(!row||!row.length)continue;
+    var st=String(row[0]||'').trim().toUpperCase()||last;
+    if(!st)continue;last=st;
+    var ie=String(row[9]||'').trim(),ic=String(row[10]||'').trim();
+    var pe=String(row[11]||'').trim(),pc=String(row[12]||'').trim();
+    var ll=String(row[13]||'').trim();
+    if(!ie&&!ic&&!pe&&!pc&&!ll)continue;
+    if(!map[st]){map[st]={s:st,ie:'',ic:'',pe:'',pc:'',ll:''};D.push(map[st]);}
+    var m=map[st];
+    if(!m.ie&&ie)m.ie=ie;if(!m.ic&&ic)m.ic=ic;
+    if(!m.pe&&pe)m.pe=pe;if(!m.pc&&pc)m.pc=pc;
+    if(!m.ll&&ll)m.ll=ll;
+  }
+  D.sort(function(a,b){return a.s.localeCompare(b.s);});
+}
+function handleSearch(v){
+  document.getElementById('clearBtn').style.display=v?'block':'none';
+  render(v.trim().toUpperCase());
+}
+function clearSearch(){
+  document.getElementById('searchBox').value='';
+  document.getElementById('clearBtn').style.display='none';
+  render('');
+}
+function render(q){
+  var L=document.getElementById('stationList'),C=document.getElementById('stationCount');
+  if(!D.length){
+    L.innerHTML='<div class="empty"><div class="ic">&#128194;</div><h3>No data loaded yet</h3><p>Tap Upload above to get started</p></div>';
+    C.textContent='';return;
+  }
+  var f=q?D.filter(function(x){return x.s.startsWith(q);}):D;
+  C.textContent='Showing '+f.length+' of '+D.length+' stations';
+  if(!f.length){L.innerHTML='<div class="nores">No station found: '+q+'</div>';return;}
+  L.innerHTML=f.map(mkCard).join('');
+}
+function mkCard(x){
+  var hi=x.ie||x.ic,hp=x.pe||x.pc,hl=x.ll;
+  var b='',id='c'+x.s,sec='';
+  if(hi)b+='<span class="badge">Internal</span>';
+  if(hp)b+='<span class="badge">Public</span>';
+  if(hl)b+='<span class="badge">LL Airport</span>';
+  if(hi)sec+=mkSec('Internal',x.ie,x.ic,id+'i');
+  if(hp)sec+=mkSec('Public',x.pe,x.pc,id+'p');
+  if(hl)sec+=mkSec('LL Airport','',x.ll,id+'l');
+  return '<div class="card"><div class="card-head" onclick="tog(''+id+'')"><span class="code">'+x.s+'</span><div class="badges">'+b+'</div><span class="arr" id="a'+id+'">&#9660;</span></div><div class="card-body" id="'+id+'">'+sec+'</div></div>';
+}
+function mkSec(t,e,c,id){
+  var r='';
+  if(e)r+='<div class="row"><span class="lbl">Email:</span><span class="val eml">'+e+'</span></div>';
+  if(c)r+='<div class="row"><span class="lbl">Contact:</span><span class="val">'+c+'</span></div>';
+  var ca=e?'<div class="cpa"><textarea id="ta'+id+'" readonly onclick="this.select()">'+e+'</textarea><button class="cpabtn" id="b'+id+'" onclick="cp('ta'+id+'','b'+id+'')">&#128203; Copy</button></div>':'';
+  var hdr=t+(e?'<button class="cpbtn" id="cb'+id+'" onclick="cp('ta'+id+'','cb'+id+'')">&#128203; Copy Email</button>':'');
+  return '<div class="sec"><div class="sec-title">'+hdr+'</div><div class="sec-body">'+r+ca+'</div></div>';
+}
+function tog(id){
+  var b=document.getElementById(id),a=document.getElementById('a'+id);
+  var o=b.classList.contains('open');
+  b.classList.toggle('open',!o);a.classList.toggle('open',!o);
+}
+function cp(tid,bid){
+  var ta=document.getElementById(tid);if(!ta)return;
+  ta.focus();ta.select();
+  var ok=false;try{ok=document.execCommand('copy');}catch(e){}
+  if(!ok){
+    var t=document.createElement('textarea');
+    t.value=ta.value;t.style.cssText='position:fixed;top:0;left:0;opacity:0;';
+    document.body.appendChild(t);t.focus();t.select();
+    try{document.execCommand('copy');}catch(e){}
+    document.body.removeChild(t);
+  }
+  var btn=document.getElementById(bid);
+  if(btn){var o=btn.textContent;btn.textContent='Copied!';btn.classList.add('ok');setTimeout(function(){btn.textContent=o;btn.classList.remove('ok');},2000);}
+}
 </script>
 </body>
 </html>
