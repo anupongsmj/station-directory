@@ -75,28 +75,28 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#f0f2f5;min-height:100vh
 var D=[];
 function loadFile(inp){
   var f=inp.files[0];if(!f)return;
-  var st=document.getElementById('uploadStatus');
-  st.textContent='Reading '+f.name+'...';st.className='';
+  var st=document.getElementById("uploadStatus");
+  st.textContent="Reading "+f.name+"...";st.className="";
   var r=new FileReader();
   r.onload=function(e){
     try{
-      var wb=XLSX.read(new Uint8Array(e.target.result),{type:'array',cellFormula:false,raw:false});
-      var sn=wb.SheetNames.find(function(n){return n.toUpperCase()==='EMAIL';}) || wb.SheetNames[0];
-      var rows=XLSX.utils.sheet_to_json(wb.Sheets[sn],{header:1,defval:'',raw:false});
+      var wb=XLSX.read(new Uint8Array(e.target.result),{type:"array",cellFormula:false,raw:false});
+      var sn=wb.SheetNames.find(function(n){return n.toUpperCase()==="EMAIL";}) || wb.SheetNames[0];
+      var rows=XLSX.utils.sheet_to_json(wb.Sheets[sn],{header:1,defval:"",raw:false});
       parseRows(rows);
-      st.textContent='Loaded: '+f.name+' ('+D.length+' stations from sheet: '+sn+')';
-      st.className='status-ok';
+      st.textContent="Loaded: "+f.name+" ("+D.length+" stations from sheet: "+sn+")";
+      st.className="status-ok";
       showAll();
     }catch(err){
-      st.textContent='Error: '+err.message;
-      st.className='status-err';
+      st.textContent="Error: "+err.message;
+      st.className="status-err";
     }
   };
   r.readAsArrayBuffer(f);
 }
 function findCol(hdr,keywords){
   for(var h=0;h<hdr.length;h++){
-    var hn=String(hdr[h]||'').toLowerCase().trim();
+    var hn=String(hdr[h]||"").toLowerCase().trim();
     if(!hn)continue;
     var allMatch=true;
     for(var k=0;k<keywords.length;k++){if(hn.indexOf(keywords[k])<0){allMatch=false;break;}}
@@ -105,43 +105,43 @@ function findCol(hdr,keywords){
   return -1;
 }
 function parseRows(rows){
-  D=[];var last='';var map={};
+  D=[];var last="";var map={};
   var hdr=rows[0]||[];
-  var colSt=findCol(hdr,['station']);
-  if(colSt<0)colSt=findCol(hdr,['iata']);
-  if(colSt<0)colSt=findCol(hdr,['code']);
+  var colSt=findCol(hdr,["station"]);
+  if(colSt<0)colSt=findCol(hdr,["iata"]);
+  if(colSt<0)colSt=findCol(hdr,["code"]);
   if(colSt<0)colSt=0;
-  var colIe=findCol(hdr,['internal','email']);
-  if(colIe<0)colIe=findCol(hdr,['int.','email']);
+  var colIe=findCol(hdr,["internal","email"]);
+  if(colIe<0)colIe=findCol(hdr,["int.","email"]);
   if(colIe<0)colIe=9;
-  var colIc=findCol(hdr,['internal','contact']);
-  if(colIc<0)colIc=findCol(hdr,['internal','phone']);
-  if(colIc<0)colIc=findCol(hdr,['internal','tel']);
+  var colIc=findCol(hdr,["internal","contact"]);
+  if(colIc<0)colIc=findCol(hdr,["internal","phone"]);
+  if(colIc<0)colIc=findCol(hdr,["internal","tel"]);
   if(colIc<0)colIc=10;
-  var colPe=findCol(hdr,['public','email']);
-  if(colPe<0)colPe=findCol(hdr,['pub','email']);
+  var colPe=findCol(hdr,["public","email"]);
+  if(colPe<0)colPe=findCol(hdr,["pub","email"]);
   if(colPe<0)colPe=11;
-  var colPc=findCol(hdr,['public','contact']);
-  if(colPc<0)colPc=findCol(hdr,['public','phone']);
-  if(colPc<0)colPc=findCol(hdr,['public','tel']);
+  var colPc=findCol(hdr,["public","contact"]);
+  if(colPc<0)colPc=findCol(hdr,["public","phone"]);
+  if(colPc<0)colPc=findCol(hdr,["public","tel"]);
   if(colPc<0)colPc=12;
-  var colLl=findCol(hdr,['ll airport']);
-  if(colLl<0)colLl=findCol(hdr,['lion']);
+  var colLl=findCol(hdr,["ll airport"]);
+  if(colLl<0)colLl=findCol(hdr,["lion"]);
   if(colLl<0)colLl=13;
-  var dbg=document.getElementById('dbg');
-  dbg.style.display='block';
-  dbg.textContent='Detected columns: Station='+colSt+' | Internal Email='+colIe+' | Internal Contact='+colIc+' | Public Email='+colPe+' | Public Contact='+colPc+' | LL='+colLl+' | Row 1 headers: '+hdr.slice(0,16).join(' | ');
+  var dbg=document.getElementById("dbg");
+  dbg.style.display="block";
+  dbg.textContent="Detected columns: Station="+colSt+" | Internal Email="+colIe+" | Internal Contact="+colIc+" | Public Email="+colPe+" | Public Contact="+colPc+" | LL="+colLl+" | Row 1 headers: "+hdr.slice(0,16).join(" | ");
   for(var i=1;i<rows.length;i++){
     var row=rows[i];if(!row||!row.length)continue;
-    var st=String(row[colSt]||'').trim().toUpperCase()||last;
+    var st=String(row[colSt]||"").trim().toUpperCase()||last;
     if(!st)continue;last=st;
-    var ie=String(row[colIe]||'').trim();
-    var ic=String(row[colIc]||'').trim();
-    var pe=String(row[colPe]||'').trim();
-    var pc=String(row[colPc]||'').trim();
-    var ll=String(row[colLl]||'').trim();
+    var ie=String(row[colIe]||"").trim();
+    var ic=String(row[colIc]||"").trim();
+    var pe=String(row[colPe]||"").trim();
+    var pc=String(row[colPc]||"").trim();
+    var ll=String(row[colLl]||"").trim();
     if(!ie&&!ic&&!pe&&!pc&&!ll)continue;
-    if(!map[st]){map[st]={s:st,ie:'',ic:'',pe:'',pc:'',ll:''};D.push(map[st]);}
+    if(!map[st]){map[st]={s:st,ie:"",ic:"",pe:"",pc:"",ll:""};D.push(map[st]);}
     var m=map[st];
     if(!m.ie&&ie)m.ie=ie;
     if(!m.ic&&ic)m.ic=ic;
@@ -152,70 +152,70 @@ function parseRows(rows){
   D.sort(function(a,b){return a.s.localeCompare(b.s);});
 }
 function doSearch(v){
-  document.getElementById('clr').style.display=v?'block':'none';
+  document.getElementById("clr").style.display=v?"block":"none";
   showAll(v.trim().toUpperCase());
 }
 function clearS(){
-  document.getElementById('srch').value='';
-  document.getElementById('clr').style.display='none';
-  showAll('');
+  document.getElementById("srch").value="";
+  document.getElementById("clr").style.display="none";
+  showAll("");
 }
 function showAll(q){
-  var L=document.getElementById('lst'),C=document.getElementById('cnt');
+  var L=document.getElementById("lst"),C=document.getElementById("cnt");
   if(!D.length){
-    L.innerHTML='<div class="empty"><h3>&#128194; No data loaded</h3><p>Select your Excel file above</p></div>';
-    C.textContent='';return;
+    L.innerHTML="<div class=\"empty\"><h3>&#128194; No data loaded</h3><p>Select your Excel file above</p></div>";
+    C.textContent="";return;
   }
   var f=q?D.filter(function(x){return x.s.startsWith(q);}):D;
-  C.textContent='Showing '+f.length+' of '+D.length+' stations';
-  if(!f.length){L.innerHTML='<div class="nr">No station found: '+q+'</div>';return;}
-  L.innerHTML=f.map(mkCard).join('');
+  C.textContent="Showing "+f.length+" of "+D.length+" stations";
+  if(!f.length){L.innerHTML="<div class=\"nr\">No station found: "+q+"</div>";return;}
+  L.innerHTML=f.map(mkCard).join("");
 }
 function mkCard(x){
   var hi=x.ie||x.ic,hp=x.pe||x.pc,hl=x.ll;
-  var b='',id='c'+x.s,sec='';
-  if(hi)b+='<span class="bg">Internal</span>';
-  if(hp)b+='<span class="bg">Public</span>';
-  if(hl)b+='<span class="bg">LL Airport</span>';
-  if(hi)sec+=mkSec('Internal',x.ie,x.ic,id+'i');
-  if(hp)sec+=mkSec('Public',x.pe,x.pc,id+'p');
-  if(hl)sec+=mkSec('LL Airport','',x.ll,id+'l');
-  return '<div class="card"><div class="ch" onclick='tog("'+id+'")'>'
-    +'<span class="cc">'+x.s+'</span><div class="bgs">'+b+'</div>'
-    +'<span class="ar" id="a'+id+'">&#9660;</span></div>'
-    +'<div class="cb" id="'+id+'">'+sec+'</div></div>';
+  var b="",id="c"+x.s,sec="";
+  if(hi)b+="<span class=\"bg\">Internal</span>";
+  if(hp)b+="<span class=\"bg\">Public</span>";
+  if(hl)b+="<span class=\"bg\">LL Airport</span>";
+  if(hi)sec+=mkSec("Internal",x.ie,x.ic,id+"i");
+  if(hp)sec+=mkSec("Public",x.pe,x.pc,id+"p");
+  if(hl)sec+=mkSec("LL Airport","",x.ll,id+"l");
+  return "<div class=\"card\"><div class=\"ch\" onclick='tog(\"" +id+ "\")'>"+
+    "<span class=\"cc\">"+x.s+"</span><div class=\"bgs\">"+b+"</div>"+
+    "<span class=\"ar\" id=\"a"+id+"\">&#9660;</span></div>"+
+    "<div class=\"cb\" id=\""+id+"\">"+sec+"</div></div>";
 }
 function mkSec(t,e,c,id){
-  var r='';
-  if(e)r+='<div class="rw"><span class="lb">Email:</span><span class="vl em">'+e+'</span></div>';
-  if(c)r+='<div class="rw"><span class="lb">Contact:</span><span class="vl">'+c+'</span></div>';
-  var ca='';
-  if(e)ca='<div class="cpa"><textarea id="ta'+id+'" readonly onclick="this.select()">'+e+'</textarea>'
-    +'<button class="cab" id="b'+id+'" onclick="cp(''+id+'')">&#128203; Copy</button></div>';
-  var hd=t+(e?'<button class="cpb" id="cb'+id+'" onclick="cp(''+id+'')">&#128203; Copy Email</button>':'');
-  return '<div class="sec"><div class="sh">'+hd+'</div><div class="sb">'+r+ca+'</div></div>';
+  var r="";
+  if(e)r+="<div class=\"rw\"><span class=\"lb\">Email:</span><span class=\"vl em\">"+e+"</span></div>";
+  if(c)r+="<div class=\"rw\"><span class=\"lb\">Contact:</span><span class=\"vl\">"+c+"</span></div>";
+  var ca="";
+  if(e)ca="<div class=\"cpa\"><textarea id=\"ta"+id+"\" readonly onclick=\"this.select()\">"+e+"</textarea>"
+    +"<button class=\"cab\" id=\"b"+id+"\" onclick=\"cp('"+id+"')\">&#128203; Copy</button></div>";
+  var hd=t+(e?"<button class=\"cpb\" id=\"cb"+id+"\" onclick=\"cp('"+id+"')\">&#128203; Copy Email</button>":"");
+  return "<div class=\"sec\"><div class=\"sh\">"+hd+"</div><div class=\"sb\">"+r+ca+"</div></div>";
 }
 function tog(id){
-  var b=document.getElementById(id),a=document.getElementById('a'+id);
-  var o=b.classList.contains('op');
-  b.classList.toggle('op',!o);a.classList.toggle('op',!o);
+  var b=document.getElementById(id),a=document.getElementById("a"+id);
+  var o=b.classList.contains("op");
+  b.classList.toggle("op",!o);a.classList.toggle("op",!o);
 }
 function cp(id){
-  var ta=document.getElementById('ta'+id);if(!ta)return;
+  var ta=document.getElementById("ta"+id);if(!ta)return;
   ta.focus();ta.select();
-  var ok=false;try{ok=document.execCommand('copy');}catch(e){}
+  var ok=false;try{ok=document.execCommand("copy");}catch(e){}
   if(!ok){
-    var t=document.createElement('textarea');
+    var t=document.createElement("textarea");
     t.value=ta.value;
-    t.style.cssText='position:fixed;top:0;left:0;opacity:0;';
+    t.style.cssText="position:fixed;top:0;left:0;opacity:0;";
     document.body.appendChild(t);t.focus();t.select();
-    try{document.execCommand('copy');}catch(e){}
+    try{document.execCommand("copy");}catch(e){}
     document.body.removeChild(t);
   }
-  ['cb'+id,'b'+id].forEach(function(bid){
+  ["cb"+id,"b"+id].forEach(function(bid){
     var btn=document.getElementById(bid);
-    if(btn){var o=btn.textContent;btn.textContent='Copied!';btn.classList.add('ok');
-    setTimeout(function(){btn.textContent=o;btn.classList.remove('ok');},2000);}
+    if(btn){var o=btn.textContent;btn.textContent="Copied!";btn.classList.add("ok");
+    setTimeout(function(){btn.textContent=o;btn.classList.remove("ok");},2000);}
   });
 }
 </script>
